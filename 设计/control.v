@@ -133,7 +133,7 @@ menToReg,ALUsrc,regWrite,regDst,ALUctr);
 
     wire [2:0] ALUop;
 
-    mainControl _main(.OP(OP),.jump(jump),.extop(extop),.branch(branch),.menWrite(menWrite),.menToReg(menToReg),.ALUsrc(ALUsrc),.regWrite(regWrite),.regDst(regDst),.ALUop(ALUop))
-    ALUControl _ALU(.ALUop(ALUop),.funct(funct),.ALUctr(ALUctr));
+    mainControl main(.OP(OP),.jump(jump),.extop(extop),.branch(branch),.menWrite(menWrite),.menToReg(menToReg),.ALUsrc(ALUsrc),.regWrite(regWrite),.regDst(regDst),.ALUop(ALUop));
+    ALUControl ALU(.ALUop(ALUop),.funct(funct),.ALUctr(ALUctr));
 
 endmodule
