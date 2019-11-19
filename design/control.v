@@ -76,7 +76,7 @@ memToReg,ALUsrc,regWrite,regDst,ALUop);
                 ALUop[2]=0;
                 ALUop[0]=1;
             end
-            6'b001101://JUMP
+            6'b000010://JUMP
             begin
                 regWrite=0;
                 memWrite=0;

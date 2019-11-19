@@ -1,0 +1,32 @@
+# Loading project SingleCycleCPU
+# Compile of control.v was successful.
+# Compile of control_test.v was successful.
+# 2 compiles, 0 failed with no errors.
+vsim SingleCyCleCPU.mainCtl_test
+# vsim SingleCyCleCPU.mainCtl_test 
+# Start time: 10:56:17 on Nov 19,2019
+# Loading SingleCyCleCPU.mainCtl_test
+# Loading SingleCyCleCPU.mainControl
+run
+# ** Warning: (vsim-3116) Problem reading symbols from linux-gate.so.1 : can not open ELF file.
+# ** Warning: (vsim-3116) Problem reading symbols from /usr/lib32/libpthread.so.0 : module was loaded at an absolute address.
+# ** Warning: (vsim-3116) Problem reading symbols from /usr/lib32/librt.so.1 : module was loaded at an absolute address.
+# ** Warning: (vsim-3116) Problem reading symbols from /usr/lib32/libdl.so.2 : module was loaded at an absolute address.
+# ** Warning: (vsim-3116) Problem reading symbols from /usr/lib32/libm.so.6 : module was loaded at an absolute address.
+# ** Warning: (vsim-3116) Problem reading symbols from /usr/lib32/libc.so.6 : module was loaded at an absolute address.
+# ** Warning: (vsim-3116) Problem reading symbols from /lib/ld-linux.so.2 : module was loaded at an absolute address.
+# ** Warning: (vsim-3116) Problem reading symbols from /usr/lib32/libnss_files.so.2 : module was loaded at an absolute address.
+add wave -position insertpoint  \
+sim:/mainCtl_test/OP \
+sim:/mainCtl_test/jump \
+sim:/mainCtl_test/extop \
+sim:/mainCtl_test/branch \
+sim:/mainCtl_test/memWrite \
+sim:/mainCtl_test/memToReg \
+sim:/mainCtl_test/ALUsrc \
+sim:/mainCtl_test/regWrite \
+sim:/mainCtl_test/regDst \
+sim:/mainCtl_test/ALUop
+run
+# End time: 10:57:24 on Nov 19,2019, Elapsed time: 0:01:07
+# Errors: 0, Warnings: 8

@@ -13,7 +13,8 @@ module mainCtl_test();
         else if (OP==6'b001101) OP=6'b100011;
         else if (OP==6'b100011) OP=6'b101011;
         else if (OP==6'b101011) OP=6'b000100;
-        else if (OP==6'b000100) OP=6'b000000;
+        else if (OP==6'b000100) OP=6'b000010;
+        else if (OP==6'b000010) OP=6'b000000;
     end
 
     mainControl _main(.OP(OP),.jump(jump),.extop(extop),

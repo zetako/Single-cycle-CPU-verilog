@@ -1,0 +1,17 @@
+/home/zetako/git/Single-cycle-CPU-verilog/design/control_test.v {1 {vlog -work SingleCyCleCPU -stats=none /home/zetako/git/Single-cycle-CPU-verilog/design/control_test.v
+Model Technology ModelSim - Intel FPGA Edition vlog 10.5c Compiler 2017.01 Jan 23 2017
+-- Compiling module mainCtl_test
+
+Top level modules:
+	mainCtl_test
+
+} {} {}} /home/zetako/git/Single-cycle-CPU-verilog/design/control.v {1 {vlog -work SingleCyCleCPU -stats=none /home/zetako/git/Single-cycle-CPU-verilog/design/control.v
+Model Technology ModelSim - Intel FPGA Edition vlog 10.5c Compiler 2017.01 Jan 23 2017
+-- Compiling module mainControl
+-- Compiling module ALUControl
+-- Compiling module controlor
+
+Top level modules:
+	controlor
+
+} {} {}}
