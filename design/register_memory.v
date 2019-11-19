@@ -1,4 +1,4 @@
-module regMem(clk,reset,regWrite,W,Ra,Rb,Rw,A,B);
+module register_memory(clk,reset,regWrite,W,Ra,Rb,Rw,A,B);
     input clk,reset,regWrite,W;
     input [4:0] Ra,Rb,Rw;
     output [31:0] A,B;

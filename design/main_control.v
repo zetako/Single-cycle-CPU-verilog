@@ -1,4 +1,4 @@
-module mainControl(OP,jump,extop,branch,memWrite,
+module main_control(OP,jump,extop,branch,memWrite,
 memToReg,ALUsrc,regWrite,regDst,ALUop);
     input [5:0] OP;
     output jump,extop,branch;
@@ -87,53 +87,3 @@ memToReg,ALUsrc,regWrite,regDst,ALUop);
     end
 
 endmodule // 主控电路
-
-module ALUControl(ALUop,funct,ALUctr);
-    input [2:0] ALUop;
-    input [5:0] funct;
-    output [2:0] ALUctr;
-
-    reg [2:0] ALUctr;
-
-    always @(ALUop,funct)
-    begin
-        case(ALUop)
-            3'b000://add
-                ALUctr=3'b010;
-            3'b0x1://sub
-                ALUctr=3'b110;
-            3'b010://or
-                ALUctr=3'b001;
-            3'b1xx:
-                case(funct)
-                    4'b0000://add
-                        ALUctr=3'b010;  
-                    4'b0010://sub
-                        ALUctr=3'b110;
-                    4'b0100://and
-                        ALUctr=3'b000;
-                    4'b0101://or
-                        ALUctr=3'b001;
-                    4'b1010://sub
-                        ALUctr=3'b110;
-                endcase
-        endcase
-    end
-
-endmodule // ALU控制电路
-
-module controlor(OP,funct,jump,extop,branch,memWrite,
-memToReg,ALUsrc,regWrite,regDst,ALUctr);
-    input [5:0] OP;
-    input [5:0] funct;
-    output jump,extop,branch;
-    output memWrite,memToReg,ALUsrc;
-    output regWrite,regDst;
-    output [2:0] ALUctr;
-
-    wire [2:0] ALUop;
-
-    mainControl main(.OP(OP),.jump(jump),.extop(extop),.branch(branch),.memWrite(memWrite),.memToReg(memToReg),.ALUsrc(ALUsrc),.regWrite(regWrite),.regDst(regDst),.ALUop(ALUop));
-    ALUControl ALU(.ALUop(ALUop),.funct(funct),.ALUctr(ALUctr));
-
-endmodule
