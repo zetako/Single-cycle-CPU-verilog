@@ -6,7 +6,7 @@ module NPC(clk,reset,branch,zero,jump,imm32,imm26,PC);
 
     reg [31:0] PC;
     
-    always @(posedge clk)
+    always @(posedge clk or posedge reset)//异步清零
     begin
         if (reset) PC=0;
         else

@@ -17,7 +17,7 @@ module mainCtl_test();
         else if (OP==6'b000010) OP=6'b000000;
     end
 
-    mainControl _main(.OP(OP),.jump(jump),.extop(extop),
+    main_control _main(.OP(OP),.jump(jump),.extop(extop),
                 .branch(branch),.memWrite(memWrite),
                 .memToReg(memToReg),.ALUsrc(ALUsrc),
                 .regWrite(regWrite),.regDst(regDst),
@@ -57,6 +57,6 @@ module ALUctl_test();
         end
     end
 
-    ALUControl _ALU(.ALUop(ALUop),.funct(funct),.ALUctr(ALUctr));
+    ALU_control _ALU(.ALUop(ALUop),.funct(funct),.ALUctr(ALUctr));
 
 endmodule // ALU控制测试
