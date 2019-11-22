@@ -1,5 +1,6 @@
-module controlor();
+module controlor(op,funct,zero,regWrt,ALUsrcA,ALUsrcB,ALUctr,extOp,memWrt,memRd,PCsrc,PCwrt,jump,branch);
     input [5:0] op,funct;
+    input zero;
     output regWrt,ALUsrcA,ALUsrcB;
     output [2:0] ALUctr;
     output extOp,memWrt,memRd;
@@ -138,7 +139,12 @@ module controlor();
             memRd<=0;
             PCwrt<=1;
             jump=0;
-            branch=1;
+            case(op)
+            6'b000100://beq
+                branch<=zero;
+            6'b000101://bne
+                branch<=~zero;
+            endcase
         end
         6'b000001://bltz
         begin
@@ -150,8 +156,8 @@ module controlor();
             memWrt<=0;
             memRd<=0;
             PCwrt<=1;
-            jump=0;
-            branch=1;
+            jump<=0;
+            if (!zero) branch<=1;
         end
         6'b000010://j
         begin
