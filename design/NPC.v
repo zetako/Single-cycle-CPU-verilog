@@ -1,4 +1,4 @@
-module NPC(clk,reset,branch,jump,imm32,imm26,PCwrt,NPC);
+module NPC(clk,reset,branch,jump,imm32,imm26,PCwrt,PC,NPC);
     input clk,reset,branch,jump,PCwrt;
     input [31:0] imm32;
     input [25:0] imm26;

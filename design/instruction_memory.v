@@ -7,11 +7,11 @@ module instruction_memory(readAddress,instruction);
 
     initial
     begin
-        $readmemh("src/code.txt",memory);
-        tmp[0]=0;
-        tmp[1]=0;
-        tmp[2]=0;
-        tmp[3]=0;
+        $readmemh("/home/zetako/git/Single-cycle-CPU-verilog/design/src/code.txt",memory);
+        tmp[0]=8'h00;
+        tmp[1]=8'h00;
+        tmp[2]=8'h00;
+        tmp[3]=8'h00;
     end
 
     assign instruction={tmp[0],tmp[1],tmp[2],tmp[3]};

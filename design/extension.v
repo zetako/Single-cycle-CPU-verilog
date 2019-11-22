@@ -10,9 +10,9 @@ module extension(imm16,imm32,extop);
         if (extop)//符号拓展
         begin
             if (imm16[15]) imm32<={16'hffff,imm16};
-            else imm32={16'h0,imm16};
+            else imm32<={16'h0000,imm16};
         end
-        else imm32={16'b0,imm16};//0拓展
+        else imm32<={16'h0000,imm16};//0拓展
     end
 
 endmodule // 立即数扩展
