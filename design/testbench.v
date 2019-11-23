@@ -141,7 +141,7 @@ module test_NPC();
     reg clk,reset,branch,jump,PCwrt;
     reg [31:0] imm32;
     reg [25:0] imm26;
-    reg [31:0] PC,NPC;
+    wire [31:0] PC,NPC;
 
     integer idx;//表示测试模式
 
@@ -152,25 +152,152 @@ module test_NPC();
     begin
         idx<=0;
         clk<=0;
-        reset<=1;
+        reset<=0;
         branch<=0;
         jump<=0;
         PCwrt<=1;
         imm32<=32'h00000000;
         imm26<=26'h0000000;
-        PC<=32'h00000000;
-        NPC<=32'h00000000;
     end
 
     always #5
     begin
         idx=idx+1;
-        if (idx==10) idx=0;
+        if (idx==5) idx=0;
+    end
+
+    always #1 clk=~clk;
+
+    always @(idx)
+    begin
+        case (idx)
+        1://初始化PC
+        begin
+            reset<=1;
+            jump<=0;
+            branch<=0;
+        end
+        2://正常+4
+        reset<=0;
+        3://jump
+        begin
+            imm26<=26'hf;
+            jump<=1;
+        end
+        4://branch
+        begin
+            jump<=0;
+            branch<=1;
+            imm32<=32'hb;
+        end
+        endcase
+    end
+endmodule // NPC组件测试
+
+module test_controlor();
+    reg [5:0] op,funct;
+    reg zero;
+    wire regWrt,ALUsrcA,ALUsrcB;
+    wire [2:0] ALUctr;
+    wire extOp,memWrt,memRd;
+    wire PCwrt,jump,branch;
+
+    integer idx;
+
+    controlor ctrl(.op(op),.funct(funct),.zero(zero),.regWrt(regWrt),
+                    .ALUsrcA(ALUsrcA),.ALUsrcB(ALUsrcB),.ALUctr(ALUctr),
+                    .extOp(extOp),.memWrt(memWrt),.memRd(memRd),
+                    .PCwrt(PCwrt),.jump(jump),.branch(branch));
+
+    initial
+    begin
+        op<=5'b00000;
+        funct<=5'b00000;
+        zero<=0;
+        idx<=0;
+    end
+
+    always #5 
+    begin
+        idx=idx+1;
+        if (idx==20) idx=0;
     end
 
     always @(idx)
     begin
         case (idx)
+        1://add
+        begin
+            op<=6'b000000;
+            funct<=6'b100000;
+        end
+        2://sub
+        begin
+            op<=6'b000000;
+            funct<=6'b100010;
+        end
+        3://addiu
+            op<=6'b001001;
+        4://andi
+            op<=6'b001100;
+        5://and
+        begin
+            op<=6'b000000;
+            funct<=6'b100100;
+        end
+        6://ori
+            op<=6'b001101;
+        7://or
+        begin
+            op<=6'b000000;
+            funct<=6'b100101;
+        end
+        8://sll
+        begin
+            op<=6'b000000;
+            funct<=6'b000000;
+        end
+        9://slti
+            op<=6'b001010;
+        10://sw
+            op<=6'b101011;
+        11://lw
+            op<=6'b100011;
+        12://beq-failed
+        begin
+            op<=6'b000100;
+            zero<=1;
+        end
+        13://beq-success
+        begin
+            op<=6'b000100;
+            zero<=0;
+        end
+        14://bne-fail
+        begin
+            op<=6'b000101;
+            zero<=1;
+        end
+        15://bne-success
+        begin
+            op<=6'b000101;
+            zero<=0;
+        end
+        16://bltz-fail
+        begin
+            op<=6'b000001;
+            zero<=0;
+        end
+        17://bltz-success
+        begin
+            op<=6'b000001;
+            zero<=1;
+        end
+        18://j
+            op<=6'b000010;
+        19://halt
+            op<=6'b111111;
         endcase
     end
-endmodule //NPC组件测试
+
+endmodule // 控制器测试
