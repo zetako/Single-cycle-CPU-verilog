@@ -1,4 +1,4 @@
-module cpu();
+module cpu(clk,reset,PC,NPC,reg_out_rs,reg_out_rt,alu_out,db);
     input clk,reset;
     output [31:0] PC,NPC,reg_out_rs,reg_out_rt,alu_out,db;
 
