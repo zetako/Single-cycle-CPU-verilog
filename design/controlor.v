@@ -57,7 +57,7 @@ module controlor(op,funct,zero,regWrt,ALUsrcA,ALUsrcB,ALUctr,extOp,memWrt,memRd,
             ALUsrcA<=1;
             ALUsrcB<=0;
             ALUctr<=3'b000;
-            extOp<=0;
+            extOp<=1;
             memWrt<=0;
             memRd<=0;
             PCwrt<=1;
@@ -96,7 +96,7 @@ module controlor(op,funct,zero,regWrt,ALUsrcA,ALUsrcB,ALUctr,extOp,memWrt,memRd,
             ALUsrcA<=1;
             ALUsrcB<=0;
             ALUctr<=3'b110;
-            extOp<=0;
+            extOp<=1;
             memWrt<=0;
             memRd<=0;
             PCwrt<=1;
@@ -133,7 +133,7 @@ module controlor(op,funct,zero,regWrt,ALUsrcA,ALUsrcB,ALUctr,extOp,memWrt,memRd,
         begin
             regWrt<=0;
             ALUsrcA<=1;
-            ALUsrcB<=0;
+            ALUsrcB<=1;
             ALUctr<=3'b001;
             extOp<=1;
             memWrt<=0;
@@ -147,7 +147,7 @@ module controlor(op,funct,zero,regWrt,ALUsrcA,ALUsrcB,ALUctr,extOp,memWrt,memRd,
         begin
             regWrt<=0;
             ALUsrcA<=1;
-            ALUsrcB<=0;
+            ALUsrcB<=1;
             ALUctr<=3'b001;
             extOp<=1;
             memWrt<=0;

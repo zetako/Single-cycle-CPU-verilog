@@ -5,11 +5,11 @@ module cpu(clk,reset,PC,NPC,reg_out_rs,reg_out_rt,alu_out,db);
 
     wire [31:0] PC,NPC,reg_out_rs,reg_out_rt,db,funct;
     wire [31:0] PCaddr,instruction,imme32,Dout;
-    wire [31:0] alu_inA,alu_inB,alu_out;
+    wire [31:0] alu_inA,alu_inB,alu_out,shaft;
     wire [25:0] j_addr;
     wire [15:0] imme;
     wire [5:0] op;
-    wire [4:0] rs,rt,rd,shaft;
+    wire [4:0] rs,rt,rd,Rw;
     wire PCwrt,branch,jump;
     wire extop,regWrt,memWrt,memRd;
     wire ALUsrcA,ALUsrcB,zero;
@@ -31,7 +31,7 @@ module cpu(clk,reset,PC,NPC,reg_out_rs,reg_out_rt,alu_out,db);
     ALU parts_alu(.A(alu_inA),.B(alu_inB),.ALUctr(ALUctr),.out(alu_out),.zero(zero));
     controlor parts_ctrl(.op(op),.funct(funct),.zero(zero),.regWrt(regWrt),
                     .ALUsrcA(ALUsrcA),.ALUsrcB(ALUsrcB),.ALUctr(ALUctr),
-                    .extOp(extOp),.memWrt(memWrt),.memRd(memRd),
+                    .extOp(extop),.memWrt(memWrt),.memRd(memRd),
                     .PCwrt(PCwrt),.jump(jump),.branch(branch));
     data_memory parts_dmem(.clk(clk),.Din(reg_out_rt),.Dout(Dout),.addr(alu_out),.memWrt(memWrt));
     extension parts_exten(.imm16(imme),.imm32(imme32),.extop(extop));

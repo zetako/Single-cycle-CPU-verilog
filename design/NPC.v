@@ -10,7 +10,7 @@ module NPC(clk,reset,branch,jump,imm32,imm26,PCwrt,PC,NPC);
     always @(negedge clk or posedge reset)
     begin
         if (reset) NPC<=32'b0;
-        else if (branch) NPC=PC+4+imm32;
+        else if (branch) NPC=PC+4+(imm32<<2);
         else if (jump) NPC={PC[31:28],imm26,2'b00};
         else NPC=PC+4;
     end

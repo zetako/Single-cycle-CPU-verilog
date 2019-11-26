@@ -5,7 +5,7 @@ module extension(imm16,imm32,extop);
 
     reg [31:0] imm32;
 
-    always @(extop)
+    always @(extop,imm16)
     begin
         if (extop)//符号拓展
         begin
