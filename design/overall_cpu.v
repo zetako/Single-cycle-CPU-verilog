@@ -3,11 +3,12 @@ module cpu(clk,reset,PC,NPC,reg_out_rs,reg_out_rt,alu_out,db);
     output [31:0] PC,NPC,reg_out_rs,reg_out_rt,alu_out,db;
 
 
-    wire [31:0] PC,NPC,reg_out_rs,reg_out_rt,alu_out,db;
+    wire [31:0] PC,NPC,reg_out_rs,reg_out_rt,db,funct;
     wire [31:0] PCaddr,instruction,imme32,Dout;
+    wire [31:0] alu_inA,alu_inB,alu_out;
     wire [25:0] j_addr;
     wire [15:0] imme;
-    wire [5:0] op,funct;
+    wire [5:0] op;
     wire [4:0] rs,rt,rd,shaft;
     wire PCwrt,branch,jump;
     wire extop,regWrt,memWrt,memRd;
@@ -19,10 +20,11 @@ module cpu(clk,reset,PC,NPC,reg_out_rs,reg_out_rt,alu_out,db);
     assign rs=instruction[25:21];
     assign rt=instruction[20:16];
     assign rd=instruction[15:11];
-    assign shaft=instruction[10:6];
+    assign shaft={27'b0,instruction[10:6]};
     assign funct=instruction[5:0];
     assign imme=instruction[15:0];
     assign j_addr=instruction[25:0];
+    assign PC=PCaddr;
     
 
 
@@ -38,7 +40,7 @@ module cpu(clk,reset,PC,NPC,reg_out_rs,reg_out_rt,alu_out,db);
                 .imm32(imme32),.imm26(j_addr),.PCwrt(PCwrt),.PC(PCaddr),.NPC(NPC));
     register_memory parts_rmem(.clk(clk),.reset(reset),.regWrite(regWrt),
                                 .W(db),.Ra(rs),.Rb(rt),.Rw(Rw),.A(reg_out_rs),.B(reg_out_rt));
-    mux #(32) parts_alu_a(.select(ALUsrcA),.in0(imme32),.in1(reg_out_rt),.out(alu_inA));
+    mux #(32) parts_alu_a(.select(ALUsrcA),.in0(shaft),.in1(reg_out_rs),.out(alu_inA));
     mux #(32) parts_alu_b(.select(ALUsrcB),.in0(imme32),.in1(reg_out_rt),.out(alu_inB));
     mux #(5) parts_rt_or_rs(.select(ALUsrcB),.in0(rt),.in1(rd),.out(Rw));
     mux #(32) parts_db_src(.select(memRd),.in0(alu_out),.in1(Dout),.out(db));

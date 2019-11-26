@@ -301,3 +301,23 @@ module test_controlor();
     end
 
 endmodule // 控制器测试
+
+module test_cpu();
+    reg clk,reset;
+    wire [31:0] PC,NPC,reg_out_rs,reg_out_rt,alu_out,db;
+
+    initial
+    begin
+        clk<=0;
+
+        #5 reset=0;
+        #5 reset=1;
+        #5 reset=0;
+    end
+
+    always #20 clk=~clk;
+    
+    cpu CPU(.clk(clk),.reset(reset),.PC(PC),.NPC(NPC),
+                .reg_out_rs(reg_out_rs),.reg_out_rt(reg_out_rt),
+                .alu_out(alu_out),.db(db));
+endmodule // 总体测试
