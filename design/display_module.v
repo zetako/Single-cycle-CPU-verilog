@@ -81,10 +81,37 @@ module four_7seg(data,seg,select,clk);
 
 endmodule //四位数码管
 
-module display_module(seg,select,clk,type,PC,NPC,rs_a,rs_d,rt_a,rt_d,alu_out,db);
+module clk_div #(parameter width=1) (clk_in,clk_out);
+    input clk_in;
+    output clk_out;
+
+    reg clk_out;
+
+    integer idx;
+
+    initial
+    begin
+        clk_out=clk_in;
+        idx=0;
+    end
+
+    always @(clk_in)
+    begin
+        idx=idx+1;
+        if (idx==width)
+        begin
+            idx=0;
+            clk_out=~clk_out;
+        end
+    end
+
+endmodule // 分频
+
+module display_module(seg,select,clk_base,type,PC,NPC,rs_a,rs_d,rt_a,rt_d,alu_out,db);
     input [1:0]type;
-    input clk;
-    input [31:0] PC,NPC,rs_a,rs_d,rt_a,rt_d,alu_out,db;
+    input clk_base;
+    input [31:0] PC,NPC,rs_d,rt_d,alu_out,db;
+    input [4:0] rs_a,rt_a;
     output [6:0] seg;
     output [3:0] select;
 
@@ -92,14 +119,16 @@ module display_module(seg,select,clk,type,PC,NPC,rs_a,rs_d,rt_a,rt_d,alu_out,db)
     reg [3:0] select;
 
     wire [15:0] pc,rs,rt,alu;
+    wire clk;
     assign pc={PC[7:0],NPC[7:0]};
-    assign rs={rs_a[7:0],rs_d[7:0]};
-    assign rt={rt_a[7:0],rt_d[7:0]};
+    assign rs={3'b000,rs_a,rs_d[7:0]};
+    assign rt={3'b000,rt_a,rt_d[7:0]};
     assign alu={alu_out[7:0],db[7:0]};
 
     wire [6:0] seg00,seg01,seg10,seg11;
     wire [3:0] select00,select01,select10,select11;
 
+    clk_div #(40000) div(.clk_in(clk_in),.clk_out(clk));
     four_7seg display00(.data(pc),.seg(seg00),.select(select00),.clk(clk));
     four_7seg display01(.data(rs),.seg(seg01),.select(select01),.clk(clk));
     four_7seg display10(.data(rt),.seg(seg10),.select(select10),.clk(clk));

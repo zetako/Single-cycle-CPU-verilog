@@ -118,7 +118,7 @@ module controlor(op,funct,zero,regWrt,ALUsrcA,ALUsrcB,ALUctr,extOp,memWrt,memRd,
         end
         6'b100011://lw
         begin
-            regWrt<=0;
+            regWrt<=1;
             ALUsrcA<=1;
             ALUsrcB<=0;
             ALUctr<=3'b000;

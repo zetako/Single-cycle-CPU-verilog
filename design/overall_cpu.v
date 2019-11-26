@@ -1,6 +1,7 @@
-module cpu(clk,reset,PC,NPC,reg_out_rs,reg_out_rt,alu_out,db);
+module cpu(clk,reset,PC,NPC,reg_out_rs,reg_out_rt,alu_out,db,rs,rt);
     input clk,reset;
     output [31:0] PC,NPC,reg_out_rs,reg_out_rt,alu_out,db;
+    output [4:0] rs,rt;
 
 
     wire [31:0] PC,NPC,reg_out_rs,reg_out_rt,db,funct;
