@@ -85,24 +85,18 @@ module clk_div #(parameter width=1) (clk_in,clk_out);
     input clk_in;
     output clk_out;
 
-    reg clk_out;
+    reg clk_out=0;
 
-    integer idx;
+    integer idx=0;
 
-    initial
+    always @(posedge clk_in)
     begin
-        clk_out=clk_in;
-        idx=0;
-    end
-
-    always @(clk_in)
-    begin
-        idx=idx+1;
-        if (idx==width)
+        if (idx>=width)
         begin
-            idx=0;
-            clk_out=~clk_out;
+            idx<=0;
+            clk_out<=~clk_out;
         end
+        else idx<=idx+1;
     end
 
 endmodule // 分频
@@ -128,7 +122,7 @@ module display_module(seg,select,clk_base,type,PC,NPC,rs_a,rs_d,rt_a,rt_d,alu_ou
     wire [6:0] seg00,seg01,seg10,seg11;
     wire [3:0] select00,select01,select10,select11;
 
-    clk_div #(40000) div(.clk_in(clk_in),.clk_out(clk));
+    clk_div #(40000) div(.clk_in(clk_base),.clk_out(clk));
     four_7seg display00(.data(pc),.seg(seg00),.select(select00),.clk(clk));
     four_7seg display01(.data(rs),.seg(seg01),.select(select01),.clk(clk));
     four_7seg display10(.data(rt),.seg(seg10),.select(select10),.clk(clk));
